@@ -1,6 +1,0 @@
-# github.com/go-sql-driver/mysql v1.4.1
-github.com/go-sql-driver/mysql
-# github.com/urfave/cli v1.20.0
-github.com/urfave/cli
-# google.golang.org/appengine v1.5.0
-google.golang.org/appengine/cloudsql
