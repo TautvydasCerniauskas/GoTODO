@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	lib "github.com/tautvydascerniauskas/GoTODO/lib"
+	lib "github.com/tautvydascerniauskas/TODO/lib"
 	"github.com/urfave/cli"
 )
 
