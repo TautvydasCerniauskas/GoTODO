@@ -36,7 +36,7 @@ var allDeteleFlags = []cli.Flag{
 var Commands = []cli.Command{
 	{
 		Name:   "init",
-		Usage:  "Initialize MYSQL Database",
+		Usage:  "Initialize SQLITE Database",
 		Action: lib.CmdInit,
 		Flags:  forceFlags,
 	},
@@ -78,6 +78,7 @@ var Commands = []cli.Command{
 
 // CommandNotFound is custom error
 func CommandNotFound(c *cli.Context, command string) {
-	fmt.Fprintf(os.Stderr, "%s: '%s' is not a %s command. see '%s --help'.", c.App.Name, command, c.App.Name, c.App.Name)
+  name := c.App.Name
+	fmt.Fprintf(os.Stderr, "%s: '%s' is not a %s command. see '%s --help'.", name, command, name, name)
 	os.Exit(2)
 }

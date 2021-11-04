@@ -1,7 +1,6 @@
 package task
 
 import (
-	"log"
 	"os"
 	"strconv"
 	"time"
@@ -10,27 +9,18 @@ import (
 	"github.com/urfave/cli"
 )
 
+var subCommands = []string{"all"}
+
 // CmdList list all the tasks
 func CmdList(c *cli.Context) {
 	if len(c.Args()) != 0 {
 		return
 	}
 
-	isAllMode := c.String("all")
-	var s string
-	if isAllMode == "true" {
-		s = "SELECT id, title, priority, is_done, created_at, updated_at FROM todos ORDER BY FIELD(priority, 'HIGH', 'MEDIUM', 'LOW')"
-	} else {
-		s = "SELECT id, title, priority, is_done, created_at, updated_at FROM todos WHERE is_done = 0 ORDER BY FIELD(priority, 'HIGH', 'MEDIUM', 'LOW')"
-	}
+	isAllMode, err := strconv.ParseBool(c.String("all"))
+  checkError(err)
 
-	db := dbConn()
-	defer db.Close()
-
-	rows, err := db.Query(s)
-	if err != nil {
-		log.Fatal(err)
-	}
+  rows := GetAll(isAllMode)
 	defer rows.Close()
 
 	data := [][]string{}

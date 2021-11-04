@@ -4,4 +4,4 @@ package main
 const Name string = "GoTODO"
 
 // Version is CLI version of this
-const Version string = "0.0.1"
+const Version string = "0.0.2"

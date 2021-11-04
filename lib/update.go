@@ -1,11 +1,11 @@
 package task
 
 import (
+	"errors"
 	"fmt"
-	"log"
-	"strconv"
 	"strings"
-	"time"
+
+	"github.com/rs/zerolog/log"
 
 	"github.com/urfave/cli"
 )
@@ -13,21 +13,19 @@ import (
 // CmdUpdate will update a specific task
 func CmdUpdate(c *cli.Context) {
 	if len(c.Args()) < 2 {
-		fmt.Println("[ERROR] Must set task id and title")
+    err := errors.New("Must set task id and title")
+    log.Fatal().
+        Err(err).
+        Msg("service")
 	}
 
 	id := c.Args()[0]
 	title := strings.Join(c.Args()[1:], " ")
 
-	db := dbConn()
-
-	defer db.Close()
-
-	now := strconv.FormatInt(time.Now().Unix(), 10)
-
-	_, err := db.Exec("UPDATE todos SET title = '" + title + "', updated_at = " + now + " WHERE id = " + id)
-	if err != nil {
-		log.Fatal(err)
+	todo := TodoUpdate{
+		id:    id,
+		title: title,
 	}
+	UpdateTodo(todo)
 	fmt.Println("Updated task id = ", id)
 }

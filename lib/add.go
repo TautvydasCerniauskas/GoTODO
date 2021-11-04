@@ -2,7 +2,6 @@ package task
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -23,20 +22,9 @@ func CmdAdd(c *cli.Context) {
 
 	now := strconv.FormatInt(time.Now().Unix(), 10)
 	tag := getTag(title)
-	dbTitle := title[1:]
-	fmt.Println("Added a new task: ", dbTitle)
+  title = trimedTitle(title)
+	fmt.Println("Added a new task: ", title)
 
-	_, err := db.Exec("INSERT INTO todos(title, priority, is_done, created_at, updated_at) values('" + dbTitle + "','" + tag + "', 0, " + now + ", " + now + ")")
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func getTag(title string) string {
-	if strings.Contains(title, "!") {
-		return HIGH.String()
-	} else if strings.Contains(title, "$") {
-		return LOW.String()
-	}
-	return MEDIUM.String()
+	_, err := db.Exec("INSERT INTO todos(title, priority, is_done, created_at, updated_at) values('" + title + "','" + tag + "', 0, " + now + ", " + now + ")")
+  checkError(err)
 }

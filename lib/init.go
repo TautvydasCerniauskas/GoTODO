@@ -3,7 +3,6 @@ package task
 import (
 	"database/sql"
 	"log"
-	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli"
@@ -17,7 +16,7 @@ func CmdInit(c *cli.Context) {
 
 	createTable := `
 	CREATE TABLE todos (
-		id integer AUTO_INCREMENT PRIMARY KEY,
+		id integer PRIMARY KEY AUTOINCREMENT,
 		title text NOT NULL,
 		priority text NOT NULL,
 		is_done integer NOT NULL,
@@ -34,26 +33,8 @@ func CmdInit(c *cli.Context) {
 
 func dbConn() (db *sql.DB) {
 	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error with a .env file")
-	}
-	dbDriver := os.Getenv("DBDRIVER")
-	dbUser := os.Getenv("DBUSER")
-	dbPass := os.Getenv("DBPASSWORD")
-	dbName := os.Getenv("DBNAME")
-	db, err = sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS " + dbName)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	db, err = sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
-	if err != nil {
-		log.Fatal(err)
-	}
+  checkError(err)
+  db, err = sql.Open("sqlite3", "./todo.db")
+  checkError(err)
 	return db
 }
