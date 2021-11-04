@@ -1,4 +1,4 @@
-module github.com/greenavenue/TODO
+module github.com/tautvydascerniauskas/TODO
 
 go 1.12
 
