@@ -78,7 +78,7 @@ var Commands = []cli.Command{
 
 // CommandNotFound is custom error
 func CommandNotFound(c *cli.Context, command string) {
-  name := c.App.Name
+	name := c.App.Name
 	fmt.Fprintf(os.Stderr, "%s: '%s' is not a %s command. see '%s --help'.", name, command, name, name)
 	os.Exit(2)
 }

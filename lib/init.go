@@ -33,8 +33,8 @@ func CmdInit(c *cli.Context) {
 
 func dbConn() (db *sql.DB) {
 	err := godotenv.Load()
-  checkError(err)
-  db, err = sql.Open("sqlite3", "./todo.db")
-  checkError(err)
+	checkError(err)
+	db, err = sql.Open("sqlite3", "./todo.db")
+	checkError(err)
 	return db
 }
